@@ -1,0 +1,23 @@
+#include <string>
+#include <vector>
+#include <stack>
+using namespace std;
+
+int solution(string arrangement) {
+    int answer = 0;
+    stack<int>num;
+    for(int i=0; i<arrangement.length();i++){
+        if(arrangement[i]=='(')
+            num.push(1);//열면 1추가
+        else{
+            //닫는괄호 나오면 스택에서 여는괄호 하나 제거
+            num.pop();
+            //레이저라는 의미니까 열린괄호개수만큼 조각 수 추가
+            if(arrangement[i-1]=='(')
+                answer= answer+num.size();
+            else//직전 기호가 여는게 아니라면 쇠막대기의 마지막인거야,조각추가
+                answer++;
+        }
+    }
+    return answer;
+}

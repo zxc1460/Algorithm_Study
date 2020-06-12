@@ -20,17 +20,15 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
 	}
 	
 	for(int i = 0; i < n; i++) {
-		if(!clothes[i]) {
-			if(i - 1 >= 0 && clothes[i - 1] > 1) {
-				clothes[i - 1]--;
-				clothes[i]++;
-			}
-			
-			if(!clothes[i] && i + 1 < n && clothes[i + 1] > 1) {
+		if(!clothes[i] && i - 1 >= 0 && clothes[i - 1] > 1) {
+			clothes[i - 1]--;
+			clothes[i]++;
+		}
+		
+		if(!clothes[i] && i + 1 < n && clothes[i + 1] > 1) {
 				clothes[i + 1]--;
 				clothes[i]++;
 			}
-		}
 	}
 	
 	for(int i = 0; i < n; i++) {

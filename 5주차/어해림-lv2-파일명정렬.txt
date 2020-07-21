@@ -1,0 +1,47 @@
+#include <string>
+#include <cctype>
+#include <vector>
+#include <algorithm>
+using namespace std;
+pair<string,int> pre(string str){
+    string head="";string num="";
+    int tail;
+    int idx;
+    for(int i=0; i<str.size();i++){
+        if(isdigit(str[i])==0)
+            head +=str[i];
+        else{
+            idx = i;
+            break;
+        }
+    }
+    for(int i= idx;i<str.size();i++){
+        if(isdigit(str[i])==0)
+            break;//문자라면 tail끝난거니까
+        num += str[i];
+    }
+    tail = atoi(num.c_str());
+    //대문자로 변환
+    for(int i=0;i< head.size();i++){
+        head[i]=toupper(head[i]);
+    }
+    return {head,tail};
+}
+bool compare(const string & a, const string & b){
+    pair<string, int>file1 = pre(a);
+    pair<string,int>file2 = pre(b);
+    
+    //정렬
+    if(file1.first==file2.first){//head가 같으면 숫자로 정렬
+        return file1.second<file2.second;
+    }else{//haed가 다르면 head로 정렬
+        return file1.first<file2.first;
+    }
+
+}
+vector<string> solution(vector<string> files) {
+    vector<string> answer;
+    stable_sort(files.begin(), files.end(),compare);
+    answer = files;
+    return answer;
+}

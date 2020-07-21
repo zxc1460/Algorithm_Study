@@ -1,0 +1,48 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int getParent(int info[], int x) {
+    if (info[x] == x) return x;
+    return info[x] = getParent(info, info[x]);
+}
+
+void unionParent(int info[], int a, int b) {
+    a = getParent(info, a);
+    b = getParent(info, b);
+    if (a < b) info[b] = a;//b를 a에 연결
+    else info[a] = b;//a를 b에 연결
+}
+int sameParent(int info[], int a, int b) {
+    a = getParent(info, a);
+    b = getParent(info, b);
+    if (a == b) return 1;
+    else return 0;
+}
+bool compare(const vector<int> & a, const vector<int>&b) {
+    return a[2] < b[2];
+}
+int solution(int n, vector<vector<int>> costs) {
+    int answer = 0;
+    int info[100];
+    for (int i = 0; i < n; i++) {
+        info[i] = i;
+    }
+    // for (int i = 0; i < costs.size(); i++) {
+    //     int parent = min(costs[i][0], costs[i][1]);
+    //     info[costs[i][0]] = parent;
+    //     info[costs[i][1]] = parent;
+    // }
+    sort(costs.begin(), costs.end(),compare);
+    int sum =0;
+    for (int i = 0; i < costs.size(); i++) {
+        if (!sameParent(info, costs[i][0], costs[i][1])) {
+            sum += costs[i][2];
+            unionParent(info, costs[i][0], costs[i][1]);
+        }
+    }
+    answer = sum;
+    return answer;
+}

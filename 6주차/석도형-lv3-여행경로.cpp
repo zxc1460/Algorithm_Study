@@ -1,19 +1,31 @@
 #include <string>
 #include <vector>
-#include <iostream>
 
 using namespace std;
 
-int main() {
-	vector<string> temp = {"ICN", "ATL", "SFO", "ATL", "ICN", "SFO"};
-	vector<string> answer = {"ICN", "ATL", "ICN", "SFO", "ATL", "SFO"};
-	
-	if(temp < answer) answer = temp;
-	
-	for(int i = 0; i < answer.size(); i++) {
-		cout << answer[i] << ' ';
+void dfs(string cur, vector<string> temp, vector<string> &answer, vector<vector<string>> &tickets) {
+	if(temp.size() == tickets.size() + 1) {
+		if(answer.empty() || temp < answer) answer = temp;
+		return;
 	}
 	
-	cout << '\n';
-	
+	for(int i = 0; i < tickets.size(); i++) {
+		if(tickets[i][0] == cur) {
+			tickets[i][0] = "done";
+			temp.push_back(tickets[i][1]);
+			
+			dfs(tickets[i][1], temp, answer, tickets);
+			
+			temp.pop_back();
+			tickets[i][0] = cur;
+		}
+	}
+}
+
+vector<string> solution(vector<vector<string>> tickets) {
+    vector<string> answer;
+    
+    dfs("ICN", {"ICN"}, answer, tickets);
+    
+    return answer;
 }

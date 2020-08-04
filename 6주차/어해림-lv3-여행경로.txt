@@ -1,0 +1,31 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+vector<string>str;
+
+vector<string> answer;
+bool dfs(vector<vector<string>>tickets, int cnt ,string start,vector<bool>visit){
+    str.push_back(start);
+    if(cnt == tickets.size()){
+        answer = str; 
+        return true;
+    }
+    for(int i=0; i<tickets.size();i++){
+        if(tickets[i][0]==start &&visit[i]==false){
+            visit[i]=true;
+            bool right = dfs(tickets,cnt+1,tickets[i][1],visit);
+            if(right)
+                return true;
+            visit[i]=false;
+            str.pop_back();
+        }
+    }
+    return false;
+}
+vector<string> solution(vector<vector<string>> tickets) {
+    vector<bool>visit(tickets.size(),false);
+    sort(tickets.begin(),tickets.end());
+    dfs(tickets,0,"ICN",visit);
+    return answer;
+}

@@ -1,33 +1,63 @@
-#include <string>
-#include <vector>
-#include<iostream>
-using namespace std;
-int col[13];
-int answer = 0;
-bool check(int n, int row){
-    for(int i=1; i<row; i++){
-        if(col[row]==col[i]) return false;
-        if(abs(i-row)==abs(col[i]-col[row])) return false;
-    }
-    return true;
-}
-void backtracking(int n,int row){
-    if(row>n){
-        ++answer;
-    }else{
-        for(int i=1; i<=n; i++){
-            col[row]=i;
-            if(check(n,row)){
-                backtracking(n,row+1);
-            }else{
-                col[row]=0;
-            }
-        }
-    }
-}
-int solution(int n) {
+void makeWall(int cnt)
 
-    backtracking(n,1);
-    
-    return answer;
+{
+    if (cnt == 3)  //벽을 세개 만들었으므로
+
+    {
+        BFS();
+
+        return;
+    }
+
+    for (int i = 0; i < N; i++)
+
+        for (int j = 0; j < M; j++)
+
+            if (temp[i][j] == 0)
+
+            {
+                temp[i][j] = 1;  //마찬가지로 해당칸에 새우고
+
+                makeWall(cnt + 1);
+
+                temp[i][j] = 0;  //다시 허문다
+            }
+}
+
+int main(void)
+
+{
+    cin >> N >> M;
+
+    for (int i = 0; i < N; i++)
+
+        for (int j = 0; j < M; j++)
+
+            cin >> lab[i][j];
+
+    for (int i = 0; i < N; i++)
+
+        for (int j = 0; j < M; j++)
+
+            if (lab[i][j] == 0)  //빈칸 발견 시
+
+            {
+                //연구실 상태를 복사한다
+
+                for (int k = 0; k < N; k++)
+
+                    for (int l = 0; l < M; l++)
+
+                        temp[k][l] = lab[k][l];
+
+                temp[i][j] = 1;  //해당 칸에 벽을 세운다
+
+                makeWall(1);  //벽을 세운 상태이므로 cnt = 1
+
+                temp[i][j] = 0;  //다시 허문다
+            }
+
+    cout << result << endl;
+
+    return 0;
 }

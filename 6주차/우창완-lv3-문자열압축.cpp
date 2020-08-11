@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-
+// https://programmers.co.kr/learn/courses/30/lessons/60057
 int solution(string s) {
     int answer = 1001;
     int cnt, loc;
@@ -27,9 +27,7 @@ int solution(string s) {
                 comp += to_string(cnt) + s.substr(j, i);
             else
                 comp += s.substr(j, i);
-            cout << comp << endl;
         }
-        cout << comp << endl;
         int leng = comp.length();
         answer = min(answer, leng);
     }

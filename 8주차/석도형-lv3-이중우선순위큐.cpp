@@ -29,7 +29,7 @@ vector<int> solution(vector<string> operations) {
         }
 
         
-        if(min_heap.empty() || max_heap.empty()) {
+        if(min_heap.empty() || max_heap.empty() || max_heap.top() < min_heap.top()) {
             while(!max_heap.empty()) max_heap.pop();
             while(!min_heap.empty()) min_heap.pop();
         }
